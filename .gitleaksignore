@@ -1,0 +1,11 @@
+# Gitleaks Ignore File
+# This file allows you to ignore specific findings that are false positives
+# Format: <fingerprint>
+# 
+# To generate fingerprints, run gitleaks with verbose output and copy the fingerprint
+# from the findings you want to ignore.
+#
+# Example:
+# cd5226711335c68be1e720b318b7bc3135a30eb2:cmd/generate/config/rules/sidekiq.go:sidekiq-secret:23
+
+# Add your false positive fingerprints below:

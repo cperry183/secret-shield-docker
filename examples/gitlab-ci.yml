@@ -1,0 +1,71 @@
+# Example GitLab CI/CD Pipeline using Secret Shield Docker
+# This is a sample pipeline showing how to integrate Secret Shield into your project
+
+stages:
+  - scan
+  - build
+  - test
+  - deploy
+
+# Include the Secret Shield scan job
+include:
+  - local: 'gitlab-ci/secret-scan.yml'
+
+# Secret scan job for merge requests
+secret-scan:mr:
+  extends: .secret_scan_mr
+  stage: scan
+  only:
+    - merge_requests
+
+# Secret scan job for main branch
+secret-scan:main:
+  extends: .secret_scan
+  stage: scan
+  only:
+    - main
+  allow_failure: false
+
+# Scheduled nightly scan
+secret-scan:scheduled:
+  extends: .secret_scan_scheduled
+  stage: scan
+  only:
+    - schedules
+
+# Example build job (runs after scan passes)
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "Building application..."
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+  only:
+    - main
+    - develop
+
+# Example test job
+test:
+  stage: test
+  image: node:18
+  script:
+    - echo "Running tests..."
+    - npm install
+    - npm test
+  only:
+    - merge_requests
+    - main
+    - develop
+
+# Example deploy job (only runs if all scans pass)
+deploy:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - echo "Deploying application..."
+  only:
+    - main
+  when: manual
