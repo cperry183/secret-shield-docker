@@ -372,14 +372,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## ❓ Troubleshooting
 
-Encountering issues? Check our [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) guide for common problems and solutions.
-
-## 📞 Support
-
-For questions, issues, or feature requests, please open an issue on the [GitHub repository](https://github.com/cperry183/secret-shield-docker/issues).
-
----
-
-**Author:** Manus AI
-**Version:** 1.0.0
-**Last Updated:** April 27, 2026
+Encountering issues? Check our [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) guide for common problems 
